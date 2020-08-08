@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:homefly/models/chuck_response.dart';
-import 'package:homefly/blocs/chuck_bloc.dart';
-import 'package:homefly/networking/Repsonse.dart';
+import 'package:dartboardhc/models/chuck_response.dart';
+import 'package:dartboardhc/blocs/chuck_bloc.dart';
+import 'package:dartboardhc/networking/Repsonse.dart';
 
 class ShowChuckyJoke extends StatefulWidget {
   final String selectedCategory;

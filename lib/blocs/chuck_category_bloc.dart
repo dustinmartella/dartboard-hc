@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:homefly/networking/Repsonse.dart';
-import 'package:homefly/repository/chuck_category_repository.dart';
-import 'package:homefly/models/chuck_categories.dart';
+import 'package:dartboardhc/networking/Repsonse.dart';
+import 'package:dartboardhc/repository/chuck_category_repository.dart';
+import 'package:dartboardhc/models/chuck_categories.dart';
 
 class ChuckCategoryBloc {
   ChuckCategoryRepository _chuckRepository;

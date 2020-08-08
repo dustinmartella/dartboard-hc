@@ -1,5 +1,5 @@
-name: homefly
-description: A new Flutter project.
+name: dartboardhc
+description: A home control panel app for OpenHAB built in Flutter.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

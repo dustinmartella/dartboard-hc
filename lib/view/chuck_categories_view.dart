@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:homefly/blocs/chuck_category_bloc.dart';
-import 'package:homefly/networking/Repsonse.dart';
-import 'package:homefly/models/chuck_categories.dart';
-import 'package:homefly/view/chuck_joke_view.dart';
+import 'package:dartboardhc/blocs/chuck_category_bloc.dart';
+import 'package:dartboardhc/networking/Repsonse.dart';
+import 'package:dartboardhc/models/chuck_categories.dart';
+import 'package:dartboardhc/view/chuck_joke_view.dart';
 
 class GetChuckCategories extends StatefulWidget {
   @override

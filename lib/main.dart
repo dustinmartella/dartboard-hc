@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:homefly/view/home_view.dart';
-import 'package:homefly/view/chuck_categories_view.dart';
+import 'package:dartboardhc/view/home_view.dart';
+import 'package:dartboardhc/view/chuck_categories_view.dart';
 
 void main() => runApp(HomeApp());
 

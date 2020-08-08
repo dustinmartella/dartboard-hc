@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:homefly/networking/Repsonse.dart';
-import 'package:homefly/repository/chuck_repository.dart';
-import 'package:homefly/models/chuck_response.dart';
+import 'package:dartboardhc/networking/Repsonse.dart';
+import 'package:dartboardhc/repository/chuck_repository.dart';
+import 'package:dartboardhc/models/chuck_response.dart';
 
 class ChuckBloc {
   ChuckRepository _chuckRepository;

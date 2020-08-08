@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:homefly/networking/ApiProvider.dart';
-import 'package:homefly/models/chuck_categories.dart';
+import 'package:dartboardhc/networking/ApiProvider.dart';
+import 'package:dartboardhc/models/chuck_categories.dart';
 
 class ChuckCategoryRepository {
   ApiProvider _provider = ApiProvider();
