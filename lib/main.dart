@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dartboardhc/view/home_view.dart';
 import 'package:dartboardhc/view/chuck_categories_view.dart';
 
+import 'package:dartboardhc/view/oh_sitemaps_view.dart';
+
 void main() => runApp(HomeApp());
 
 class HomeApp extends StatelessWidget {
@@ -37,7 +39,12 @@ class HomeApp extends StatelessWidget {
 					return Scaffold(
 						appBar: AppBar(
 							title: const Text('Settings'),
+							automaticallyImplyLeading: true,
+							leading: IconButton(icon:Icon(Icons.arrow_back),
+								onPressed:() => Navigator.pop(context, false),
+							),
 						),
+						body: GetSitemaps(),
 					);
 				}
 			}
