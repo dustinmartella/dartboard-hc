@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:dartboardhc/blocs/oh_sitemap_bloc.dart';
-import 'package:dartboardhc/rest/rest_repsonse.dart';
-import 'package:dartboardhc/models/oh_sitemap.dart';
+import 'package:dartboardhc/rest/rest.dart';
+import 'package:dartboardhc/blocs/sitemaps_bloc.dart';
+import 'package:dartboardhc/models/sitemap.dart';
+import 'package:dartboardhc/view/restbloc_view.dart';
 
 class GetSitemaps extends StatefulWidget {
   @override
@@ -10,12 +11,12 @@ class GetSitemaps extends StatefulWidget {
 }
 
 class _GetSitemapsState extends State<GetSitemaps> {
-	OhSitemapBloc _bloc;
+	SitemapsBloc _bloc;
 
 	@override
 	void initState() {
 		super.initState();
-		_bloc = OhSitemapBloc();
+		_bloc = SitemapsBloc();
 	}
 
 	@override
@@ -24,7 +25,7 @@ class _GetSitemapsState extends State<GetSitemaps> {
       RefreshIndicator(
         onRefresh: () => _bloc.fetchSitemaps(),
         child: StreamBuilder<RestResponse<Sitemaps>>(
-          stream: _bloc.ohSitemapListStream,
+          stream: _bloc.sitemapsListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
@@ -74,70 +75,8 @@ class SitemapsList extends StatelessWidget {
 			},
 			itemCount: sitemapsList.sitemaps.length,
 			shrinkWrap: true,
-			physics: ClampingScrollPhysics(),
+			physics: const AlwaysScrollableScrollPhysics(),
     );
   }
 }
 
-
-class Error extends StatelessWidget {
-  final String errorMessage;
-
-  final Function onRetryPressed;
-
-  const Error({Key key, this.errorMessage, this.onRetryPressed})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            errorMessage,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 18,
-            ),
-          ),
-          RaisedButton(
-            color: Colors.white,
-            child: Text('Retry', style: TextStyle(color: Colors.black)),
-            onPressed: onRetryPressed,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  final String loadingMessage;
-
-  const Loading({Key key, this.loadingMessage}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            loadingMessage,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-            ),
-          ),
-          SizedBox(height: 24),
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          ),
-        ],
-      ),
-    );
-  }
-}

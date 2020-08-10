@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:dartboardhc/view/oh_sitemaps_view.dart';
 import 'package:dartboardhc/view/time_view.dart';
+import 'package:dartboardhc/view/sitemaps_list_view.dart';
+import 'package:dartboardhc/view/sitemap_view.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 						ListTile(
 								leading: Icon(Icons.message),
 								title: Text('Messages'),
-								onTap: () => Navigator.pushNamed(context, '/chucky'),
+								onTap: () => Navigator.pushNamed(context, '/board'),
 						),
 						ListTile(
 								leading: Icon(Icons.account_circle),

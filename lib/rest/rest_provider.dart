@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:dartboardhc/util/string.dart';
-import 'package:dartboardhc/rest/rest_exception.dart';
+import 'package:dartboardhc/rest/rest.dart';
 
 class RestProvider {
   final String _baseUrl = UtilString.trim("https://openhab.martellaville.net/rest", "/");
@@ -18,9 +18,13 @@ class RestProvider {
 		String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$username:$password'));
 
+		Map<String, String> getHeaders = {
+			'authorization': basicAuth,
+			'Accept': 'application/json',
+		};
+
     try {
-      final response = await http.get(endpoint,
-					headers: <String, String>{'authorization': basicAuth});
+      final response = await http.get(endpoint, headers: getHeaders);
 
       responseJson = _response(response);
 
@@ -35,10 +39,11 @@ class RestProvider {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-
+				print(responseJson);
         return responseJson;
 
       case 400:
+      case 404:
         throw BadRequestException(response.body.toString());
 
       case 401:
@@ -46,9 +51,14 @@ class RestProvider {
         throw UnauthorisedException(response.body.toString());
 
       case 500:
+        throw FetchDataException(
+					'Internal server error!'
+				);
+
       default:
         throw FetchDataException(
-					'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+					'An unexpected error occured with status code: ${response.statusCode}'
+				);
     }
   }
 }

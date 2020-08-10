@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:dartboardhc/view/home_view.dart';
-import 'package:dartboardhc/view/chuck_categories_view.dart';
-
-import 'package:dartboardhc/view/oh_sitemaps_view.dart';
+import 'package:dartboardhc/view/sitemaps_list_view.dart';
+import 'package:dartboardhc/view/sitemap_view.dart';
 
 void main() => runApp(HomeApp());
 
@@ -27,12 +26,22 @@ class HomeApp extends StatelessWidget {
 			darkTheme: ThemeData.dark(),
 			//themeMode: ThemeMode.dark,
 			routes: <String, WidgetBuilder>{
+
 				'/': (BuildContext context) {
 					return MyHomePage(title: 'Dartboard');
 				},
 
-				'/chucky': (BuildContext context) {
-					return GetChuckCategories();
+				'/board': (BuildContext context) {
+					return Scaffold(
+						appBar: AppBar(
+							title: const Text('Board'),
+							automaticallyImplyLeading: true,
+							leading: IconButton(icon:Icon(Icons.arrow_back),
+								onPressed:() => Navigator.pop(context, false),
+							),
+						),
+						body: GetSitemap(),
+					);
 				},
 
 				'/settings': (BuildContext context) {
@@ -46,7 +55,8 @@ class HomeApp extends StatelessWidget {
 						),
 						body: GetSitemaps(),
 					);
-				}
+				},
+
 			}
     );
   }
