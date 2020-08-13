@@ -6,8 +6,8 @@ import 'package:dartboardhc/models/sitemap.dart';
 class SitemapRepository {
   RestProvider _provider = RestProvider();
 
-  Future<Sitemap> fetchSitemapData(String sitemapName) async {
-    final response = await _provider.get("sitemaps/$sitemapName");
+  Future<Sitemap> fetchSitemapData(String link) async {
+    final response = await _provider.get(link);
 
     return Sitemap.fromJson(response);
   }

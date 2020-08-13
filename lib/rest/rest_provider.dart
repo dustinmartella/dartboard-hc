@@ -7,12 +7,13 @@ import 'package:dartboardhc/util/string.dart';
 import 'package:dartboardhc/rest/rest.dart';
 
 class RestProvider {
-  final String _baseUrl = UtilString.trim("https://openhab.martellaville.net/rest", "/");
+  //final String _baseUrl = UtilString.trim("https://openhab.martellaville.net/rest", "/");
 
   Future<dynamic> get(String url) async {
     var responseJson;
 
-		String endpoint = _baseUrl + "/" + UtilString.trim(url, "/");
+		//String endpoint = _baseUrl + "/" + UtilString.trim(url, "/");
+		String endpoint = url;
 		String username = 'martellaville';
 		String password = 'foxtrotuniform77';
 		String basicAuth =

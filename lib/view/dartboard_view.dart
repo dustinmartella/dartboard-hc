@@ -5,19 +5,41 @@ import 'package:dartboardhc/blocs/sitemap_bloc.dart';
 import 'package:dartboardhc/models/sitemap.dart';
 import 'package:dartboardhc/view/restbloc_view.dart';
 
-class GetSitemap extends StatefulWidget {
+class DartboardView extends StatefulWidget {
+	Sitemap sitemap;
+
   @override
-  _GetSitemapState createState() => _GetSitemapState();
+  _DartboardViewState createState() => _DartboardViewState(sitemap);
+
+	DartboardView({Key key, this.sitemap}) : super(key: key);
 }
 
-class _GetSitemapState extends State<GetSitemap> {
+class _DartboardViewState extends State<DartboardView> {
+	Sitemap sitemap;
 	SitemapBloc _bloc;
+
+	@override
+	_DartboardViewState(this.sitemap);
 
 	@override
 	void initState() {
 		super.initState();
-		_bloc = SitemapBloc("https://openhab.martellaville.net/rest/sitemaps/systeminfo");
+		_bloc = SitemapBloc(sitemap != null ? sitemap.link : 'https://openhab.martellaville.net/rest/sitemaps/nada');
 	}
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
+	/*
+	void updateSitemap(Sitemap sitemap) {
+		setState(() {
+			_bloc = SitemapBloc(sitemap != null ? sitemap.name : 'nada');
+		});
+	}
+	*/
 
 	@override
 	Widget build(BuildContext context) {
@@ -48,12 +70,6 @@ class _GetSitemapState extends State<GetSitemap> {
         ),
       );
 	}
-
-  @override
-  void dispose() {
-    _bloc.dispose();
-    super.dispose();
-  }
 }
 
 
@@ -71,7 +87,7 @@ class SitemapBoard extends StatelessWidget {
 						ListTile(
 							leading: Icon(Icons.message),
 							title: Text(sitemap.homepage.widgets[index].label),
-							onTap: () => Navigator.pop(context, false),
+							//onTap: () => Navigator.pop(context, false),
 						);
 				},
 				itemCount: sitemap.homepage.widgets.length,

@@ -21,7 +21,10 @@ class _TimeViewState extends State<TimeView> {
 
 	@override
 	Widget build(BuildContext context) {
-		return Text(_timeString);
+		return Text(
+			_timeString,
+			//style: Theme.of(context).textTheme.subtitle1,
+		);
 	}
 
 	void _getTime() {
@@ -34,6 +37,6 @@ class _TimeViewState extends State<TimeView> {
 	}
 
 	String _formatDateTime(DateTime dateTime) {
-		return DateFormat('hh:mm:ss').format(dateTime);
+		return DateFormat('hh:mm').format(dateTime);
 	}
 }
