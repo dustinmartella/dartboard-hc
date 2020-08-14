@@ -38,10 +38,6 @@ class SettingsPage extends StatelessWidget {
 							),
 						),
 						const Divider(),
-						ListTile(
-							leading: Icon(Icons.home),
-							trailing: TextField(),
-						),
 						/*
 						RaisedButton(
 							onPressed: () => ThemeController.of(context).setTheme('dark'),
