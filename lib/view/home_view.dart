@@ -11,9 +11,8 @@ import 'package:dartboardhc/view/restbloc_view.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
-	final SharedPreferences localPrefs;
 
-  MyHomePage({Key key, this.localPrefs, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
