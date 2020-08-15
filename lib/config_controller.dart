@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// provides the currently selected theme, saves changed theme preferences to disk
-class ThemeController extends ChangeNotifier {
+class ConfigController extends ChangeNotifier {
   static const themePrefKey = 'theme';
 	static const baseUrlPrefKey = 'baseurl';
 
@@ -11,7 +11,7 @@ class ThemeController extends ChangeNotifier {
 	String _baseUrl;
 
 	// construct props from shared preferences
-  ThemeController(this._prefs) {
+  ConfigController(this._prefs) {
     _themeMode = _prefs.getString(themePrefKey) ?? 'system';
 		_baseUrl = _prefs.getString(baseUrlPrefKey) ?? 'http://openhab';
   }
@@ -41,18 +41,18 @@ class ThemeController extends ChangeNotifier {
 	}
 
   /// get the controller from any page of your app
-  static ThemeController of(BuildContext context) {
-    final ThemeControllerProvider provider = context.dependOnInheritedWidgetOfExactType<ThemeControllerProvider>();
+  static ConfigController of(BuildContext context) {
+    final ConfigControllerProvider provider = context.dependOnInheritedWidgetOfExactType<ConfigControllerProvider>();
     return provider.controller;
   }
 }
 
 /// provides the theme controller to any page of your app
-class ThemeControllerProvider extends InheritedWidget {
-  const ThemeControllerProvider({Key key, this.controller, Widget child}) : super(key: key, child: child);
+class ConfigControllerProvider extends InheritedWidget {
+  const ConfigControllerProvider({Key key, this.controller, Widget child}) : super(key: key, child: child);
 
-  final ThemeController controller;
+  final ConfigController controller;
 
   @override
-  bool updateShouldNotify(ThemeControllerProvider old) => controller != old.controller;
+  bool updateShouldNotify(ConfigControllerProvider old) => controller != old.controller;
 }

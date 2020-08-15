@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 class Sitemaps {
   final List<Sitemap> sitemaps;
 
@@ -10,13 +12,16 @@ class Sitemaps {
   }
 }
 
-class Sitemap {
+class Sitemap extends Equatable {
 	String name;
 	String label;
 	String link;
 	Homepage homepage;
 
 	Sitemap(this.name, this.label, this.link, this.homepage);
+
+	@override
+	List<Object> get props => [name];
 
 	factory Sitemap.fromJson(dynamic json) {
 		return Sitemap(
@@ -33,7 +38,7 @@ class Sitemap {
 	}
 }
 
-class Homepage {
+class Homepage extends Equatable {
 	String id;
 	String title;
 	String link;
@@ -42,6 +47,9 @@ class Homepage {
 	List<HabWidget> widgets;
 
 	Homepage(this.id, this.title, this.link, this.leaf, this.timeout, [this.widgets]);
+
+	@override
+	List<Object> get props => [id];
 
 	factory Homepage.fromJson(dynamic json) {
 		return Homepage(
@@ -60,7 +68,7 @@ class Homepage {
 	}
 }
 
-class HabWidget {
+class HabWidget extends Equatable {
 	String widgetId;
 	String type;
 	bool visibility;
@@ -69,6 +77,9 @@ class HabWidget {
 	List<HabWidget> widgets;
 
 	HabWidget(this.widgetId, this.type, this.visibility, this.label, this.icon, [this.widgets]);
+
+	@override
+	List<Object> get props => [widgetId];
 
 	factory HabWidget.fromJson(dynamic json) {
 		return HabWidget(

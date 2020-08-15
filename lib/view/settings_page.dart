@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:dartboardhc/theme_controller.dart';
+import 'package:dartboardhc/config_controller.dart';
 
 class SettingsPage extends StatelessWidget {
-	final ThemeController themeController;
+	final ConfigController configController;
 
-	const SettingsPage({Key key, this.themeController}) : super(key: key);
+	const SettingsPage({Key key, this.configController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,34 +20,29 @@ class SettingsPage extends StatelessWidget {
 			body: ListView(
 					children: <Widget>[
 						ListTile(
-							leading: Icon(themeController.themeMode == 'dark' ? Icons.brightness_low : Icons.brightness_auto),
-							onTap: () => ThemeController.of(context).setTheme(themeController.themeMode != 'dark' ? 'dark' : 'system'),
+							leading: Icon(configController.themeMode == 'dark' ? Icons.brightness_low : Icons.brightness_auto),
+							onTap: () => ConfigController.of(context).setTheme(configController.themeMode != 'dark' ? 'dark' : 'system'),
 							title: const Text('Enforce Dark Mode'),
 							trailing: Switch(
-								value: (themeController.themeMode == 'dark'),
-								onChanged: (bool value) => ThemeController.of(context).setTheme(value ? 'dark' : 'system'),
+								value: (configController.themeMode == 'dark'),
+								onChanged: (bool value) => ConfigController.of(context).setTheme(value ? 'dark' : 'system'),
 							),
 						),
 						ListTile(
-							leading: Icon(themeController.themeMode == 'light' ? Icons.brightness_high : Icons.brightness_auto),
-							onTap: () => ThemeController.of(context).setTheme(themeController.themeMode != 'light' ? 'light' : 'system'),
+							leading: Icon(configController.themeMode == 'light' ? Icons.brightness_high : Icons.brightness_auto),
+							onTap: () => ConfigController.of(context).setTheme(configController.themeMode != 'light' ? 'light' : 'system'),
 							title: const Text('Enforce Light Mode'),
 							trailing: Switch(
-								value: (themeController.themeMode == 'light'),
-								onChanged: (bool value) => ThemeController.of(context).setTheme(value ? 'light' : 'system'),
+								value: (configController.themeMode == 'light'),
+								onChanged: (bool value) => ConfigController.of(context).setTheme(value ? 'light' : 'system'),
 							),
 						),
 						const Divider(),
-						/*
-						RaisedButton(
-							onPressed: () => ThemeController.of(context).setTheme('dark'),
-							child: const Text('Dark Theme'),
-						),
-						RaisedButton(
-							onPressed: () => ThemeController.of(context).setTheme('system'),
-							child: const Text('System'),
-						),
-						*/
+						const Text("OpenHAB URL"),
+						const Text("Username"),
+						const Text("Password"),
+						const Text("Default Sitemap"),
+						const Text("Single Sitemap Mode"),
 					],
 			),
 		);

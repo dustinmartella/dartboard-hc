@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:dartboardhc/theme_controller.dart';
-import 'package:dartboardhc/view/home_view.dart';
-import 'package:dartboardhc/view/sitemap_view.dart';
+import 'package:dartboardhc/config_controller.dart';
+import 'package:dartboardhc/view/dartboard_page.dart';
+import 'package:dartboardhc/view/board_page.dart';
 import 'package:dartboardhc/view/settings_page.dart';
 
 void main() async {
 	final localPrefs = await SharedPreferences.getInstance();
-	final themeController = ThemeController(localPrefs);
+	final configController = ConfigController(localPrefs);
 
-	runApp(HomeApp(themeController: themeController));
+	runApp(HomeApp(configController: configController));
 }
 
 class HomeApp extends StatelessWidget {
-	final ThemeController themeController;
+	final ConfigController configController;
 	final String title = 'Dartboard';
 
-	const HomeApp({Key key, this.themeController}) : super(key: key);
+	const HomeApp({Key key, this.configController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-			animation: themeController,
+			animation: configController,
 			builder: (context, _) {
-				return ThemeControllerProvider(
-					controller: themeController,
+				return ConfigControllerProvider(
+					controller: configController,
 					child: MaterialApp(
 						title: title,
 						theme: ThemeData(
@@ -37,24 +37,15 @@ class HomeApp extends StatelessWidget {
 						routes: <String, WidgetBuilder>{
 
 							'/': (BuildContext context) {
-								return MyHomePage(title: title);
+								return DartboardPage(title: title);
 							},
 
 							'/board': (BuildContext context) {
-								return Scaffold(
-									appBar: AppBar(
-										title: const Text('Board'),
-										automaticallyImplyLeading: true,
-										leading: IconButton(icon:Icon(Icons.arrow_back),
-											onPressed:() => Navigator.pop(context, false),
-										),
-									),
-									body: GetSitemap(),
-								);
+								return BoardPage();
 							},
 
 							'/settings': (BuildContext context) {
-								return SettingsPage(themeController: themeController);
+								return SettingsPage(configController: configController);
 							},
 						}
 					),
@@ -64,7 +55,7 @@ class HomeApp extends StatelessWidget {
   }
 
 	ThemeMode _getThemeMode() {
-		switch (themeController.themeMode) {
+		switch (configController.themeMode) {
 			case 'dark':
 				return ThemeMode.dark;
 			case 'light':
