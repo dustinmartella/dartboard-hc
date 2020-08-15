@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:dartboardhc/blocs/sitemap_bloc.dart';
+import 'package:dartboardhc/blocs/homepage_bloc.dart';
 import 'package:dartboardhc/models/sitemap.dart';
 import 'package:dartboardhc/rest/rest.dart';
 import 'package:dartboardhc/view/restbloc_view.dart';
@@ -20,24 +20,35 @@ class DartboardPage extends StatefulWidget {
 
 class _DartboardPageState extends State<DartboardPage> {
 	Sitemap _sitemap;
-	SitemapBloc _bloc;
+	Homepage _homepage;
+	HomepageBloc _homepageBloc;
 
 	@override
 	void initState() {
 		super.initState();
-		_bloc = SitemapBloc(_sitemap != null ? _sitemap.link : 'https://openhab.martellaville.net/rest/sitemaps/nada');
+		_sitemap = new Sitemap();
+		_homepage = new Homepage();
+		_homepageBloc = new HomepageBloc(_homepage.link);
 	}
 
   @override
   void dispose() {
-    _bloc.dispose();
+		_homepageBloc.dispose();
     super.dispose();
   }
 
 	void _switchSitemap(Sitemap sitemap) async {
     setState(() {
       _sitemap = sitemap;
-			_bloc = SitemapBloc(_sitemap.link);
+    });
+
+		_switchHomepage(_sitemap.homepage);
+	}
+
+	void _switchHomepage(Homepage homepage) async {
+    setState(() {
+      _homepage = homepage;
+			_homepageBloc = HomepageBloc(_homepage.link);
     });
 	}
 
@@ -45,7 +56,7 @@ class _DartboardPageState extends State<DartboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_sitemap != null ? _sitemap.label : widget.title),
+        title: Text(_homepage.title ?? _sitemap.label ?? widget.title),
 				actions: [
 					Center(
 						child: TimeView(),
@@ -58,14 +69,14 @@ class _DartboardPageState extends State<DartboardPage> {
 								value: "/board",
 								child: ListTile(
 									leading: Icon(Icons.api),
-									title: Text('Board'),
+									title: const Text('Board'),
 								),
 							),
 							const PopupMenuItem<String>(
 								value: "/settings",
 								child: ListTile(
 									leading: Icon(Icons.settings),
-									title: Text('Settings'),
+									title: const Text('Settings'),
 								),
 							),
 						],
@@ -83,9 +94,9 @@ class _DartboardPageState extends State<DartboardPage> {
 					currentSitemap: _sitemap,
 				),
       body: RefreshIndicator(
-        onRefresh: () => _bloc.fetchSitemap(),
-        child: StreamBuilder<RestResponse<Sitemap>>(
-          stream: _bloc.sitemapListStream,
+        onRefresh: () => _homepageBloc.fetchHomepage(),
+        child: StreamBuilder<RestResponse<Homepage>>(
+          stream: _homepageBloc.homepageListStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
@@ -93,12 +104,15 @@ class _DartboardPageState extends State<DartboardPage> {
                   return Loading(loadingMessage: snapshot.data.message);
                   break;
                 case Status.COMPLETED:
-                  return DartboardView(sitemap: snapshot.data.data);
+                  return DartboardView(
+											homepage: snapshot.data.data,
+											onSelected: _switchHomepage,
+										);
                   break;
                 case Status.ERROR:
                   return Error(
                     errorMessage: snapshot.data.message,
-                    onRetryPressed: () => _bloc.fetchSitemap(),
+                    onRetryPressed: () => _homepageBloc.fetchHomepage(),
                   );
                   break;
               }

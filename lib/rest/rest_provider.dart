@@ -40,7 +40,7 @@ class RestProvider {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-				print(responseJson);
+				//print(responseJson);
         return responseJson;
 
       case 400:
