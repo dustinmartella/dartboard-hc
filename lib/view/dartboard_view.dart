@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
+import 'package:dartboardhc/config_controller.dart';
 import 'package:dartboardhc/models/sitemap.dart';
 
 class DartboardView extends StatelessWidget {
@@ -121,15 +122,16 @@ class HabWidgetViewText extends StatelessWidget {
 }
 
 class HabWidgetViewIcon extends StatelessWidget {
-	final String baseurl = 'https://openhab.martellaville.net';
-	final String username = 'martellaville';
-	final String password = 'foxtrotuniform77';
 	final String icon;
 
 	const HabWidgetViewIcon(this.icon, {Key key}) : super(key: key);
 
 	@override
 	Widget build(BuildContext context) {
+		String baseurl = ConfigController.of(context).baseUrl;
+		String username = ConfigController.of(context).username;
+		String password = ConfigController.of(context).password;
+
 		String basicAuth =
 			'Basic ' + base64Encode(utf8.encode('$username:$password'));
 
