@@ -101,23 +101,25 @@ class _DartboardPageState extends State<DartboardPage> {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
                 case Status.LOADING:
-                  return Loading(loadingMessage: snapshot.data.message);
-                  break;
+                  return Loading(
+											loadingMessage: snapshot.data.message
+										);
                 case Status.COMPLETED:
                   return DartboardView(
 											homepage: snapshot.data.data,
 											onSelected: _switchHomepage,
 										);
-                  break;
                 case Status.ERROR:
                   return Error(
-                    errorMessage: snapshot.data.message,
-                    onRetryPressed: () => _homepageBloc.fetchHomepage(),
-                  );
-                  break;
+											errorMessage: snapshot.data.message,
+											onRetryPressed: () => _homepageBloc.fetchHomepage(),
+										);
+								default:
+									return Container();
               }
-            }
-            return Container();
+            } else {
+							return Container();
+						}
           },
         ),
       ),

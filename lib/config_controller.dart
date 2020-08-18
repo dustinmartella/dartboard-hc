@@ -3,12 +3,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// provides the currently selected theme, saves changed theme preferences to disk
 class ConfigController extends ChangeNotifier {
+	static const showConfigKey = 'showconfig';
   static const themePrefKey = 'theme';
 	static const baseUrlPrefKey = 'baseurl';
 	static const usernamePrefKey = 'username';
 	static const passwordPrefKey = 'password';
 
   final SharedPreferences _prefs;
+	bool _showConfig;
   String _themeMode;
 	String _baseUrl;
 	String _username;
@@ -16,11 +18,15 @@ class ConfigController extends ChangeNotifier {
 
 	// construct props from shared preferences
   ConfigController(this._prefs) {
+		_showConfig = _prefs.getBool(showConfigKey) ?? false;
     _themeMode = _prefs.getString(themePrefKey) ?? 'system';
 		_baseUrl = _prefs.getString(baseUrlPrefKey) ?? 'http://openhab';
 		_username = _prefs.getString(usernamePrefKey) ?? null;
 		_password = _prefs.getString(passwordPrefKey) ?? null;
   }
+
+	// get the current show config
+	bool get showConfig => _showConfig;
 
   // get the current theme
   String get themeMode => _themeMode;
@@ -33,6 +39,13 @@ class ConfigController extends ChangeNotifier {
 
 	// get the password
 	String get password => _password;
+
+	// set show config
+	void setShowConfig(bool showConfig) {
+    _showConfig = showConfig;
+    notifyListeners();
+    _prefs.setBool(showConfigKey, showConfig);
+	}
 
 	// set theme
   void setTheme(String theme) {
