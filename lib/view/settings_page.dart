@@ -15,13 +15,22 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-	List<SettingsPageView> settingsPageViews = <SettingsPageView>[];
 
 	@override
 	void initState() {
 		super.initState();
+	}
 
+	@override
+	void dispose() {
+		super.dispose();
+	}
+
+  @override
+  Widget build(BuildContext context) {
 		final ConfigController configController = widget.configController;
+
+		List<SettingsPageView> settingsPageViews = <SettingsPageView>[];
 
 		settingsPageViews.add(
 			SettingsPageView(
@@ -30,26 +39,15 @@ class _SettingsPageState extends State<SettingsPage> {
 			)
 		);
 
-		settingsPageViews.add(
-			SettingsPageView(
-				title: 'Configuration',
-				view: SettingsConfigurationView(configController: configController),
-			)
-		);
-	}
+		if (configController.showConfig) {
+			settingsPageViews.add(
+				SettingsPageView(
+					title: 'Configuration',
+					view: SettingsConfigurationView(configController: configController),
+				)
+			);
+		}
 
-	@override
-	void dispose() {
-		super.dispose();
-	}
-
-	void showConfig() {
-    setState(() {
-		});
-	}
-
-  @override
-  Widget build(BuildContext context) {
 		return DefaultTabController(
 			length: settingsPageViews.length,
 			child: Scaffold(
@@ -61,8 +59,8 @@ class _SettingsPageState extends State<SettingsPage> {
 					),
 					actions: [
 						IconButton(
-							icon: const Icon(Icons.lock_open),
-							onPressed: () {},
+							icon: Icon(configController.showConfig ? Icons.lock_open : Icons.lock),
+							onPressed: () => ConfigController.of(context).setShowConfig(!configController.showConfig),
 						),
 					],
 					bottom: TabBar(

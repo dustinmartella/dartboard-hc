@@ -12,20 +12,6 @@ class SettingsPreferencesView extends StatefulWidget {
 }
 
 class _SettingsPreferencesViewState extends State<SettingsPreferencesView>{
-	ConfigController configController;
-
-	@override
-	void initState() {
-		super.initState();
-
-		configController = widget.configController;
-	}
-
-	void changeThemeMode(BuildContext context, ConfigController configController) {
-    setState(() {
-			ConfigController.of(context).setTheme(configController.themeMode != 'dark' ? 'dark' : 'system');
-    });
-	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -33,7 +19,7 @@ class _SettingsPreferencesViewState extends State<SettingsPreferencesView>{
 								children: <Widget>[
 									ListTile(
 										leading: Icon(widget.configController.themeMode == 'dark' ? Icons.brightness_low : Icons.brightness_auto),
-										onTap: () => changeThemeMode(context, widget.configController),
+										onTap: () => ConfigController.of(context).setTheme(widget.configController.themeMode != 'dark' ? 'dark' : 'system'),
 										title: const Text('Enforce Dark Mode'),
 										trailing: Switch(
 											value: (widget.configController.themeMode == 'dark'),

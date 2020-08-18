@@ -9,9 +9,16 @@ class DartboardDrawer extends StatefulWidget {
 	final String title;
 	final Function onSelected;
 	final Sitemap currentSitemap;
+	final Homepage currentHomepage;
 
 	@override
-	DartboardDrawer({Key key, @required this.title, @required this.onSelected, this.currentSitemap}) : super(key: key);
+	DartboardDrawer({
+		Key key,
+		@required this.title,
+		@required this.onSelected,
+		this.currentSitemap,
+		this.currentHomepage
+	}) : super(key: key);
 
   @override
   _DartboardDrawerState createState() => _DartboardDrawerState();
@@ -54,7 +61,7 @@ class _DartboardDrawerState extends State<DartboardDrawer> {
 
 						ListTile(
 							leading: Icon(Icons.home),
-							title: Text('Home'),
+							title: Text(widget.currentHomepage.parent != null ? widget.currentHomepage.parent.title : 'Home'),
 						),
 
 						const Divider(),
